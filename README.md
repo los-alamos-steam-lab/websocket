@@ -8,13 +8,14 @@ Licensed under MIT license
 ### Server
 
 * Requires Python 10 with up to date websockets library 
-  * pip has the latest version, but not apt-get, 
+  * As of Feb '23 pip has the latest version, but not apt-get 
   * I could not get this to work without python 3.10 being my default python3 because websockets would remain out of date
 * Run the server simply by running the app in any directory in your publicly accesible webserver
 * You may need to unblock the port you use
 
-### Client
+### ESP8266 Client
 
+* Tested on a Feather Huzzah
 * Copy settings.h.in to settings.h and update the applicable networks, passwords, url, port, and
   ssh fingerprints
   
