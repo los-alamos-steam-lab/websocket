@@ -16,10 +16,21 @@ Licensed under MIT license
 ### ESP8266 Client
 
 * Tested on a Feather Huzzah
-* Copy settings.h.in to settings.h and update the applicable networks, passwords, url, port, and
-  ssh fingerprints
+* Copy settings.js.in to settings.js and update the applicable networks, passwords, url, port, and ssh fingerprints
+* The board will connect to the server, send a JSON Message and a text message
+* The server will echo the messages back.
+  
+### Web Client
+
+* Copy settings.h.in to settings.h and update the server string
+* The web client will connect to the server.  Clicking "Send Message" will send a message to the server.
+* The server will echo the message back.
   
 ### Altogether Now
 
-* The board will connect to the server, send a JSON Message and a text message
-* The server will echo the messages back.
+#### Coming Next
+
+* Clicking "Who's Connected" in the web client will show all connections to the server 
+* The web client can then send messages to each connection
+* Those connections will echo back the message
+* The web client can also broadcast a message to all connected clients

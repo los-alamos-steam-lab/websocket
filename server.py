@@ -7,6 +7,7 @@ import websockets
 import logging
 import sys
 import ssl
+import serversettings
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
@@ -15,8 +16,8 @@ LOCAL  = False
 # Generate with Lets Encrypt, copied to this location, chown to current user and 400 permissions
 if not LOCAL :
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-    ssl_cert = "/home/lis/letsencrypt2/lasteamlab.com/fullchain17.pem"
-    ssl_key = "/home/lis/letsencrypt2/lasteamlab.com/privkey17.pem"
+    ssl_cert = serversettings.SSL_CERT
+    ssl_key = serversettings.SSL_KEY
     ssl_context.load_cert_chain(ssl_cert, keyfile=ssl_key)
 
 async def error(websocket, message):

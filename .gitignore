@@ -1,2 +1,5 @@
 esp8266/websocket-client/settings.h
 settings.js
+serversettings.py
+
+
