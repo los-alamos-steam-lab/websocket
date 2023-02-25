@@ -1,5 +1,4 @@
 export const Settings = {
-    socketserverstring: "wss://server.com:port",
+    socketserverstring: "wss://server.com:port/path",
 };
 
-// export var { Settings };

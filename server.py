@@ -39,6 +39,19 @@ async def handler(websocket):
     Handle a connection and dispatch it according to who is connecting.
 
     """
+    origin = websocket.request_headers["Origin"]
+    url = websocket.path
+    logging.debug("DEBUG HEADERS: " + str(websocket.path))
+    
+
+    if origin in serversettings.ACCEPTABLE_ORIGINS:
+        pass
+    elif websocket.path in serversettings.ACCEPTABLE_PATHS:
+        pass
+    else:
+        await websocket.send("Unknown Client")
+        return
+    
     # Receive and parse the "init" event from the UI.
     message = await websocket.recv()
     logging.debug("MESSAGE RECIEVED")
