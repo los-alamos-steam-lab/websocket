@@ -23,15 +23,24 @@ if not LOCAL :
 async def error(websocket, message):
     await websocket.send("ERROR: " + message)
 
-async def jsonhandler(websocket, event):
+async def webclienthandler(websocket, event):
     logging.debug("JSON: " + json.dumps(event))
     # echo back
-    await websocket.send(json.dumps(event))
+    async for message in websocket:
+        # Parse a "play" event from the UI.
+        event = json.loads(message)
+        logging.debug("JSON: " + json.dumps(event))
+        await websocket.send(json.dumps(event))
 
-async def texthandler(websocket, message):
-    logging.debug(message)
+
+async def espclienthandler(websocket, event):
+    logging.debug("JSON: " + json.dumps(event))
     # echo back
-    await websocket.send(message)
+    async for message in websocket:
+        # Parse a "play" event from the UI.
+        event = json.loads(message)
+        logging.debug("JSON: " + json.dumps(event))
+        await websocket.send(json.dumps(event))
 
 
 async def handler(websocket):
@@ -39,10 +48,10 @@ async def handler(websocket):
     Handle a connection and dispatch it according to who is connecting.
 
     """
+
+    # Determine if the client is originating from an acceptable domain
+    # or has the correct "secret" path to the server.
     origin = websocket.request_headers["Origin"]
-    url = websocket.path
-    logging.debug("DEBUG HEADERS: " + str(websocket.path))
-    
 
     if origin in serversettings.ACCEPTABLE_ORIGINS:
         pass
@@ -53,23 +62,21 @@ async def handler(websocket):
         return
     
     # Receive and parse the "init" event from the UI.
+    # Receive and parse the "init" event from the UI.
     message = await websocket.recv()
-    logging.debug("MESSAGE RECIEVED")
-    i = 0
-    try:
-        event = json.loads(message)
-    except ValueError as e:
-        await texthandler(websocket, message)
+    event = json.loads(message)
+    assert event["type"] == "init"
+
+    if event["client"] == "webclient":
+        # Second player joins an existing game.
+        await webclienthandler(websocket, event)
+    elif event["client"] == "espclient":
+        # Spectator watches an existing game.
+        await espclienthandler(websocket, event)
     else:
-        await jsonhandler(websocket, event)
- 
-    async for message in websocket:
-        try:
-            event = json.loads(message)
-        except ValueError as e:
-            await texthandler(websocket, message)
-        else:
-            await jsonhandler(websocket, event)
+        # First player starts a new game.
+        await websocket.send("Unknown Client")
+        return
 
 
 
