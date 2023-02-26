@@ -1,5 +1,8 @@
 esp8266/websocket-client/settings.h
 settings.js
 serversettings.py
+.DS_Store
+/esp8266/.DS_Store
+__pycache__/
 
 

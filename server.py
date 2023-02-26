@@ -70,7 +70,13 @@ async def processWebCommand(websocket, event):
 
 async def espclienthandler(websocket, event):
     logging.debug("JSON: " + json.dumps(event))
+    logging.debug("ID: " + str(websocket.id))
     # echo back
+    async for message in websocket:
+        # Parse a "play" event from the UI.
+        event = json.loads(message)
+        logging.debug("JSON: " + json.dumps(event))
+        await websocket.send(json.dumps(event))
     async for message in websocket:
         # Parse a "play" event from the UI.
         event = json.loads(message)
@@ -86,7 +92,11 @@ async def handler(websocket):
 
     # Determine if the client is originating from an acceptable domain
     # or has the correct "secret" path to the server.
+
+    # Determine if the client is originating from an acceptable domain
+    # or has the correct "secret" path to the server.
     origin = websocket.request_headers["Origin"]
+
 
     if origin in serversettings.ACCEPTABLE_ORIGINS:
         pass
@@ -97,7 +107,17 @@ async def handler(websocket):
         return
     
     # Receive and parse the "init" event from the UI.
+    # Receive and parse the "init" event from the UI.
     message = await websocket.recv()
+    event = json.loads(message)
+    assert event["type"] == "init"
+
+    if event["client"] == "webclient":
+        # Second player joins an existing game.
+        await webclienthandler(websocket, event)
+    elif event["client"] == "espclient":
+        # Spectator watches an existing game.
+        await espclienthandler(websocket, event)
     event = json.loads(message)
     assert event["type"] == "init"
 
