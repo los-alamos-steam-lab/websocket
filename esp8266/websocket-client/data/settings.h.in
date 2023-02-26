@@ -6,7 +6,7 @@ typedef struct {
 
 WifiInfo accesspoints[2] = {{"SSID1", "PASSWORD1"}, {"SSID2", "PASSWORD2"}};
 
-const char* websockets_connection_string = "wss://website.com:8001/secretpath"; //Enter server adress
+const char* websockets_connection_string = "wss://website.com:8001"; //Enter server adress
 
 // ---- FOR SECURE WEBSOCKET CONNECTION ----
 // To update SHA1 fingerprint, use Google Chrome to connect to website.com 

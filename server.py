@@ -25,6 +25,7 @@ async def error(websocket, message):
 
 async def webclienthandler(websocket, event):
     logging.debug("JSON: " + json.dumps(event))
+    logging.debug("ID: " + str(websocket.id))
     # echo back
     async for message in websocket:
         # Parse a "play" event from the UI.
