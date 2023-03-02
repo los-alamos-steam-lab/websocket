@@ -3,6 +3,11 @@ settings.js
 serversettings.py
 .DS_Store
 /esp8266/.DS_Store
+<<<<<<< HEAD
 __pycache__/
 *.pyc
 
+=======
+__pycache__/*
+__pycache__/
+>>>>>>> 544a43c798c71e16ba0843f78ee42061025fc7e5
