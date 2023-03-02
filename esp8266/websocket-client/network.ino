@@ -41,10 +41,7 @@ void startSocket() { // Start a Wi-Fi access point, and try to connect to some g
   if (connected) {
     Serial.println("Connected!");
 
-    String WS_msg = String("{\"JSON Message\":\"hello\"}");
-    client.send(WS_msg);
-
-    WS_msg = String("Hello");
+    String WS_msg = String("{\"type\":\"init\", \"name\":\"Huzzah\", \"client\": \"espclient\"}");
     client.send(WS_msg);
 
     // Send a ping

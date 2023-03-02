@@ -4,5 +4,5 @@ serversettings.py
 .DS_Store
 /esp8266/.DS_Store
 __pycache__/
-
+*.pyc
 
