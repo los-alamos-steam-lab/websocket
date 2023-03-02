@@ -71,7 +71,13 @@ async def processWebCommand(websocket, event):
 async def espclienthandler(websocket, event):
     logging.debug("JSON: " + json.dumps(event))
     logging.debug("ID: " + str(websocket.id))
-    # echo back
+    newsocket = {}
+    id = str(websocket.id)
+    sockets[id] = websocket
+    newsocket['name'] = event['name']
+    newsocket['client'] = event['client']
+    connected[id] = newsocket
+
     async for message in websocket:
         # Parse a "play" event from the UI.
         event = json.loads(message)
@@ -109,6 +115,7 @@ async def handler(websocket):
     # Receive and parse the "init" event from the UI.
     # Receive and parse the "init" event from the UI.
     message = await websocket.recv()
+    logging.debug("INIT MESSAGE: " + message)
     event = json.loads(message)
     assert event["type"] == "init"
 
